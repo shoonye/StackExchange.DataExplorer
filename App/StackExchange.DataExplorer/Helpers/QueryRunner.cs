@@ -8,15 +8,16 @@ using System.Text;
 using System.Web;
 using StackExchange.DataExplorer.Models;
 using Dapper;
+using MySql.Data.MySqlClient;
 
 namespace StackExchange.DataExplorer.Helpers
 {
     public class QueryRunner
     {
-        private static readonly Dictionary<string, Func<SqlConnection, IEnumerable<object>, List<object>>> magic_columns
+        private static readonly Dictionary<string, Func<MySqlConnection, IEnumerable<object>, List<object>>> magic_columns
             = GetMagicColumns();
 
-        public static readonly Dictionary<string, Func<SqlConnection, IEnumerable<object>, List<object>>>.KeyCollection MagicColumnNames = magic_columns.Keys;
+        public static readonly Dictionary<string, Func<MySqlConnection, IEnumerable<object>, List<object>>>.KeyCollection MagicColumnNames = magic_columns.Keys;
 
         static void AddBody(StringBuilder buffer, QueryResults results, Site site)
         {
@@ -258,7 +259,7 @@ namespace StackExchange.DataExplorer.Helpers
 
             var results = new QueryResults();
 
-            using (SqlConnection cnn = site.GetOpenConnection())
+            using (MySqlConnection cnn = site.GetOpenConnection())
             {
                 // well we do not want to risk blocking, if somebody needs to change this we will need to add a setting
                 cnn.Execute("set transaction isolation level read uncommitted");
@@ -268,10 +269,11 @@ namespace StackExchange.DataExplorer.Helpers
 
                 var messages = new StringBuilder();
 
-                var infoHandler = new SqlInfoMessageEventHandler((sender, args) =>
+                var infoHandler = new MySqlInfoMessageEventHandler((sender, args) =>
                                                                      {
                                                                          // todo handle errors as well
-                                                                         messages.AppendLine(args.Message);
+                                                                        // messages.AppendLine(args.Message);
+                                                                         messages.AppendLine(args.ToString());
                                                                      });
                 try
                 {
@@ -279,7 +281,7 @@ namespace StackExchange.DataExplorer.Helpers
 
                     if (query.IncludeExecutionPlan)
                     {
-                        using (var command = new SqlCommand("SET STATISTICS XML ON", cnn))
+                        using (var command = new MySqlCommand("SET STATISTICS XML ON", cnn))
                         {
                             command.ExecuteNonQuery();
                         }
@@ -289,7 +291,7 @@ namespace StackExchange.DataExplorer.Helpers
 
                     foreach (string batch in query.ExecutionSqlBatches)
                     {
-                        using (var command = new SqlCommand(batch, cnn))
+                        using (var command = new MySqlCommand(batch, cnn))
                         {
                             if (result != null)
                             {
@@ -350,10 +352,10 @@ namespace StackExchange.DataExplorer.Helpers
         /// <param name="messages"><see cref="StringBuilder" /> instance to which to append messages.</param>
         /// <param name="IncludeExecutionPlan">If true indciates that the query execution plans are expected to be contained
         /// in the results sets; otherwise, false.</param>
-        private static void PopulateResults(QueryResults results, SqlCommand command, AsyncQueryRunner.AsyncResult result, StringBuilder messages, bool IncludeExecutionPlan)
+        private static void PopulateResults(QueryResults results, MySqlCommand command, AsyncQueryRunner.AsyncResult result, StringBuilder messages, bool IncludeExecutionPlan)
         {
             QueryPlan plan = new QueryPlan();
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (MySqlDataReader reader = command.ExecuteReader())
             {
                 if (result != null && reader.HasRows)
                 {
@@ -567,7 +569,7 @@ namespace StackExchange.DataExplorer.Helpers
             }
         }
 
-        private static void ProcessMagicColumns(QueryResults results, SqlConnection cnn)
+        private static void ProcessMagicColumns(QueryResults results, MySqlConnection cnn)
         {
             int index = 0;
             foreach (ResultSet resultSet in results.ResultSets)
@@ -607,7 +609,7 @@ namespace StackExchange.DataExplorer.Helpers
             }
         }
 
-        private static void ProcessColumn(SqlConnection cnn, int index, List<List<object>> rows, ResultColumnInfo column)
+        private static void ProcessColumn(MySqlConnection cnn, int index, List<List<object>> rows, ResultColumnInfo column)
         {
             IEnumerable<object> values = rows.Select(row => row[index]);
             List<object> processedValues = magic_columns[column.Name](cnn, values);
@@ -640,9 +642,9 @@ namespace StackExchange.DataExplorer.Helpers
             }
         }
 
-        private static Dictionary<string, Func<SqlConnection, IEnumerable<object>, List<object>>> GetMagicColumns()
+        private static Dictionary<string, Func<MySqlConnection, IEnumerable<object>, List<object>>> GetMagicColumns()
         {
-            return new Dictionary<string, Func<SqlConnection, IEnumerable<object>, List<object>>>
+            return new Dictionary<string, Func<MySqlConnection, IEnumerable<object>, List<object>>>
             {
                 { "Post Link", GetPostLinks },
                 { "User Link", GetUserLinks },
@@ -651,12 +653,12 @@ namespace StackExchange.DataExplorer.Helpers
             };
         }
 
-        public static List<object> GetCommentLinks(SqlConnection cnn, IEnumerable<object> items)
+        public static List<object> GetCommentLinks(MySqlConnection cnn, IEnumerable<object> items)
         {
             return LookupIds(cnn, items, @"SELECT Id, Text FROM Comments WHERE Id IN ");
         }
 
-        public static List<object> GetSuggestedEditLinks(SqlConnection cnn, IEnumerable<object> items)
+        public static List<object> GetSuggestedEditLinks(MySqlConnection cnn, IEnumerable<object> items)
         {
             return LookupIds(cnn, items,
                              @"select Id, case when RejectionDate is not null then 'rejected' when ApprovalDate is not null then 'accepted' else 'pending' end 
@@ -664,13 +666,13 @@ namespace StackExchange.DataExplorer.Helpers
                             where Id in ");
         }
 
-        public static List<object> GetUserLinks(SqlConnection cnn, IEnumerable<object> items)
+        public static List<object> GetUserLinks(MySqlConnection cnn, IEnumerable<object> items)
         {
             return LookupIds(cnn, items,
                              @"select Id, case when DisplayName is null or LEN(DisplayName) = 0 then 'unknown' else DisplayName end from Users where Id in ");
         }
 
-        public static List<object> GetPostLinks(SqlConnection cnn, IEnumerable<object> items)
+        public static List<object> GetPostLinks(MySqlConnection cnn, IEnumerable<object> items)
         {
             return LookupIds(cnn, items,
                              @"select p1.Id, isnull(p1.Title,p2.Title) from Posts p1 
@@ -678,7 +680,7 @@ namespace StackExchange.DataExplorer.Helpers
         }
 
 
-        public static List<object> LookupIds(SqlConnection cnn, IEnumerable<object> items, string lookupSql)
+        public static List<object> LookupIds(MySqlConnection cnn, IEnumerable<object> items, string lookupSql)
         {
             var rval = new List<object>();
             if (items.Count() == 0) return rval;
@@ -698,10 +700,10 @@ namespace StackExchange.DataExplorer.Helpers
                 .Append(" ) ");
 
             var linkMap = new Dictionary<long, object>();
-            using (SqlCommand cmd = cnn.CreateCommand())
+            using (MySqlCommand cmd = cnn.CreateCommand())
             {
                 cmd.CommandText = query.ToString();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {

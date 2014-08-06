@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using MySql.Data.MySqlClient;
 
 
 namespace StackExchange.DataExplorer
@@ -38,12 +39,12 @@ namespace StackExchange.DataExplorer
             return control;
         }
 
-        public static void RegisterConnectionForDisposal(SqlConnection connection)
+        public static void RegisterConnectionForDisposal(MySqlConnection connection)
         {
-            List<SqlConnection> connections = Context.Items[DISPOSE_CONNECTION_KEY] as List<SqlConnection>;
+            List<MySqlConnection> connections = Context.Items[DISPOSE_CONNECTION_KEY] as List<MySqlConnection>;
             if (connections == null)
             {
-                Context.Items[DISPOSE_CONNECTION_KEY] = connections  = new List<SqlConnection>();
+                Context.Items[DISPOSE_CONNECTION_KEY] = connections  = new List<MySqlConnection>();
             }
 
             connections.Add(connection);

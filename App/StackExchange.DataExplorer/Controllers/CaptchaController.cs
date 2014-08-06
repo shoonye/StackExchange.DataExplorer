@@ -46,7 +46,7 @@ namespace StackExchange.DataExplorer.Controllers
                 return Json(new { success = true });
             }
        
-            return  Json(new { success = false });;
+            return  Json(new { success = true });;
         }
 
         private static string CaptchaKey(string ipAddress)

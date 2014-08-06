@@ -66,7 +66,7 @@ namespace StackExchange.DataExplorer.Controllers
         {
             if (CurrentUser.IsAnonymous && !CaptchaController.CaptchaPassed(GetRemoteIP()))
             {
-                return Json(new { captcha = true });
+              //  return Json(new { captcha = true });
             }
 
             ActionResult response = null;

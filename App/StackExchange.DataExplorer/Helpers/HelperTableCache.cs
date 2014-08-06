@@ -8,6 +8,7 @@ using System.Web;
 using StackExchange.DataExplorer.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using MySql.Data.MySqlClient;
 
 namespace StackExchange.DataExplorer.Helpers
 {
@@ -124,7 +125,7 @@ namespace StackExchange.DataExplorer.Helpers
                 foreach (var table in tables) {
                     if (tableMatcher.IsMatch(table.Name))
                     {
-                        using (SqlConnection connection = site.GetOpenConnection()) {
+                        using (MySqlConnection connection = site.GetOpenConnection()) {
                             tablesCache[table.Name] = GetTableResults(connection, table);
                         }
                     }
@@ -134,11 +135,11 @@ namespace StackExchange.DataExplorer.Helpers
             }
         }
 
-        private static ResultSet GetTableResults(SqlConnection connection, TableInfo table)
+        private static ResultSet GetTableResults(MySqlConnection connection, TableInfo table)
         {
             // We could probably refactor QueryRunner to expose this functionality
             // to us without having to recreate it here.
-            var command = new SqlCommand(String.Format("SELECT * FROM {0} ORDER BY Id ASC", table.Name), connection);
+            var command = new MySqlCommand(String.Format("SELECT * FROM {0} ORDER BY Id ASC", table.Name), connection);
             var resultSet = new ResultSet();
 
             using (var reader = command.ExecuteReader())

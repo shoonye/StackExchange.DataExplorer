@@ -16,6 +16,7 @@ using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using StackExchange.DataExplorer.Helpers;
 using StackExchange.DataExplorer.Models;
+using MySql.Data.MySqlClient;
 
 namespace StackExchange.DataExplorer
 {
@@ -112,7 +113,7 @@ namespace StackExchange.DataExplorer
             OperationContext.Current.IncomingMessageProperties["MicrosoftDataServicesRequestUri"] = builder.Uri;
 
 
-            SqlConnection sqlConnection = Current.DB.Query<Site>("SELECT * FROM Sites WHERE LOWER(Name) = @siteName OR LOWER(TinyName) = @siteName", new {siteName}).First().GetConnection(ConnectionPoolSize);
+            MySqlConnection sqlConnection = Current.DB.Query<Site>("SELECT * FROM Sites WHERE LOWER(Name) = @siteName OR LOWER(TinyName) = @siteName", new {siteName}).First().GetConnection(ConnectionPoolSize);
             Current.RegisterConnectionForDisposal(sqlConnection);
 
             var workspace = new MetadataWorkspace(

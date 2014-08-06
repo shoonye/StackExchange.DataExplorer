@@ -7,6 +7,7 @@ using System.Web;
 using StackExchange.DataExplorer.Helpers;
 using Dapper;
 using System.Linq;
+using MySql.Data.MySqlClient;
 
 namespace StackExchange.DataExplorer.Models
 {
@@ -100,16 +101,16 @@ namespace StackExchange.DataExplorer.Models
             get { return "/" + TinyName.ToLower() + "/atom"; }
         }
 
-        public SqlConnection GetConnection(int maxPoolSize)
+        public MySqlConnection GetConnection(int maxPoolSize)
         {
             // TODO: do we even need this method any longer? are we still supporting about odata?
             var cs = ConnectionString + (UseConnectionStringOverride ? "" : ((ConnectionString.EndsWith(";") ? "" : ";") + string.Format("Max Pool Size={0};",maxPoolSize)));
-            return new SqlConnection(cs);
+            return new MySqlConnection(cs);
         }
 
-        public SqlConnection GetOpenConnection()
+        public MySqlConnection GetOpenConnection()
         {
-            var cnn = new SqlConnection(ConnectionString);
+            var cnn = new MySqlConnection(ConnectionString);
             cnn.Open();
             if (AppSettings.FetchDataInReadUncommitted) { cnn.Execute("set transaction isolation level read uncommitted"); }
             return cnn;
@@ -149,8 +150,8 @@ ORDER BY
 
         public void UpdateStats()
         {
-            using (SqlConnection cnn = GetOpenConnection())
-            using( var cmd = new SqlCommand())
+            using (MySqlConnection cnn = GetOpenConnection())
+            using( var cmd = new MySqlCommand())
             {
                
                 cmd.Connection = cnn;
@@ -208,7 +209,7 @@ ORDER BY
             if (!user.IsAnonymous && user.Email != null)
             {
 
-                using (SqlConnection cnn = GetOpenConnection())
+                using (MySqlConnection cnn = GetOpenConnection())
                 {
                     string hash = Util.GravatarHash(user.Email);
                     try
@@ -235,17 +236,17 @@ ORDER BY
             var tables = new List<TableInfo>();
 
 
-            using (SqlConnection cnn = GetOpenConnection())
+            using (MySqlConnection cnn = GetOpenConnection())
             {
+                string databaseName = cnn.Database;
                 string sql =
                     @"
 select TABLE_NAME, COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH from INFORMATION_SCHEMA.COLUMNS
-order by TABLE_NAME, ORDINAL_POSITION
-";
-                using (var cmd = new SqlCommand(sql))
+WHERE TABLE_SCHEMA='"+ databaseName +"' order by TABLE_NAME, ORDINAL_POSITION";
+                using (var cmd = new MySqlCommand(sql))
                 {
                     cmd.Connection = cnn;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         columns = new List<ColumnInfo>();
                         while (reader.Read())
@@ -253,7 +254,7 @@ order by TABLE_NAME, ORDINAL_POSITION
                             var info = new ColumnInfo();
                             info.TableName = reader.GetString(0);
                             info.ColumnName = reader.GetString(1);
-                            info.SetDataType(reader.GetString(2), reader.IsDBNull(3) ? null : (int?) reader.GetInt32(3));
+                            info.SetDataType(reader.GetString(2), reader.IsDBNull(3) ? null : (int?) reader.GetInt64(3));
                             columns.Add(info);
                         }
                     }
