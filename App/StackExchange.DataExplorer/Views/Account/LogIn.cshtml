@@ -1,15 +1,34 @@
 ﻿@using StackExchange.DataExplorer
-@{this.SetPageTitle("Log In or Register - Stack Exchange Data Explorer");}
+@{this.SetPageTitle("Log In - Pacific Coast Bankers' Bank");}
 <div class="page-description">
     <div class="form-error">
     </div>
+    <div class="login_pcbb_header">
+        <h2 class="login_heading">Login Required</h2>
+        <p>This section contains confidential information not available to the public.</p>
+    </div>
+
+    <form id="pcbb_login_form" action="http://www.google.com" method="post">
+
+        <label for="email">Email Address</label>
+        <input class="aca-input" type="text" id="input_email" name="email" />
+
+        <label for="password">Password</label>
+        <input class="aca-input" id="input_password" name="password" />
+        
+        <input class="aca-primary-button" style="width: 60px" type="submit" value="Login" />
+    
+    </form>
+
     <form id="openid_form" action="/user/authenticate?returnurl=@Request.Params["returnurl"]" method="post">
+        <!--
         <div id="openid_choice">
             <p>Click your <a href="http://openid.net/what/">OpenID</a> account provider:</p>
             <div id="openid_btns"></div>
         </div>
+
         <div id="openid_input_area"></div>
-        <div>
+        <!-- <div>
             <noscript>
                 <p>
                     OpenID is a service that allows you to log on to many different websites using a
@@ -18,6 +37,7 @@
                 </p>
             </noscript>
         </div>
+        -->
         <p>Or, manually enter your OpenID:</p>
         <table id="openid-url-input">
             <tr>

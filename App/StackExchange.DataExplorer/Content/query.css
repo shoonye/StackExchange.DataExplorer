@@ -8,8 +8,11 @@
   color: #0077CC;
 }
 
-#resultSets {
-  position: relative;
+#resultSets 
+{
+    width: 978px !important;
+    left: 0px !important;
+    position: relative;
 }
 
 #resultSets .subpanel {
@@ -19,18 +22,17 @@
 }
 
 .slick-header .slick-header-column {
-  background-color: #F7F7F7;
-  color: #606060;
+  background-color: #E36B4D;
+  color: #FFFFFF;
   border-bottom: 1px dotted #CCC;
   display: block;
-  font-weight: bold;
+  font-weight: normal;
   padding: 6px 8px 5px 8px;
   text-align: center;
 }
 
 .slick-header .slick-header-column-sorted {
-  color: #0C57A0;
-  font-style: normal;
+  font-style: bold;
 }
 
 .slick-sort-indicator {

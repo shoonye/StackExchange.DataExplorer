@@ -103,11 +103,7 @@
         </p>
         <pre class="cm-s-default"><span class="cm-sql-keyword">SELECT</span><span class="cm-null"> </span><span class="cm-sql-keyword">TOP</span><span class="cm-null"> </span><span class="cm-sql-number">10</span><span class="cm-null"> </span><span class="cm-sql-word">Id</span><span class="cm-null"> </span><span class="cm-sql-keyword">AS</span><span class="cm-null"> </span><span class="cm-sql-word">[Post Link]</span><span class="cm-null"> </span><span class="cm-sql-keyword">FROM</span><span class="cm-null"> </span><span class="cm-sql-word">Posts</span><span class="cm-null"> </span><span class="cm-sql-keyword">ORDER</span><span class="cm-null"> </span><span class="cm-sql-keyword">BY</span><span class="cm-null"> </span><span class="cm-sql-word">CreationDate</span><span class="cm-null"> </span><span class="cm-sql-keyword">DESC</span></pre>
         <p>The available magic columns are:</p>
-        <ul>
-            @foreach (var column in QueryRunner.MagicColumnNames) {
-                @: <li><code>[@column]</code></li>
-            }
-        </ul>
+
         <p>
             In addition to the magic columns listed above, Data Explorer will also try to transform columns named <code>[Tags]</code>
             and <code>[TagName]</code> into stylized links to tag pages on the target site, like the

@@ -5,11 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using StackExchange.DataExplorer.Helpers;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Web;
 
 namespace StackExchange.DataExplorer.Models
 {
     public partial class User
     {
+
+
         public int Id { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
@@ -65,7 +70,7 @@ namespace StackExchange.DataExplorer.Models
 
         public bool IsValid(ChangeAction action)
         {
-            return (GetBusinessRuleViolations(action).Count == 0);
+            return true;
         }
 
         public void OnValidate(ChangeAction action)

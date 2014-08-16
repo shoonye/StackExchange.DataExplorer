@@ -271,7 +271,7 @@ namespace StackExchange.DataExplorer.Controllers
                 }
                 else
                 {
-                    order_by = CurrentUser.DefaultQuerySort ?? "featured";
+                    order_by = CurrentUser.DefaultQuerySort ?? "everything";
                 }
             }
 
@@ -445,31 +445,10 @@ namespace StackExchange.DataExplorer.Controllers
                 "All Queries",
                 new SubHeaderViewData
                 {
-                    Description = "featured",
-                    Title = "Interesting queries selected by the administrators",
-                    Href = string.Format(href, "featured") + extra,
-                    Selected = (order_by == "featured")
-                },
-                new SubHeaderViewData
-                {
                     Description = "recent",
                     Title = "Recently saved queries",
                     Href = string.Format(href, "recent") + extra,
                     Selected = (order_by == "recent")
-                },
-                new SubHeaderViewData
-                {
-                    Description = "favorite",
-                    Title = "Favorite saved queries",
-                    Href = string.Format(href, "favorite") + extra,
-                    Selected = (order_by == "favorite")
-                },
-                new SubHeaderViewData
-                {
-                    Description = "popular",
-                    Title = "Saved queries with the most views",
-                    Href = string.Format(href, "popular") + extra,
-                    Selected = (order_by == "popular")
                 },
                 new SubHeaderViewData
                 {

@@ -6,7 +6,7 @@
 @using System.Web.Optimization
 @{
     Layout = "~/Views/Shared/Query.cshtml";
-    this.SetPageTitle("Query " + Current.Controller.Site.LongName + " - Stack Exchange Data Explorer");
+    this.SetPageTitle("Query - Pacific Coast Bankers' Bank");
 
     var revision = Model != null ?  Model.CurrentRevision : null;
     
@@ -24,9 +24,9 @@
 
 @section Metadata
 {
-    <h2><input type="text" id="title" name="title" value="@name" size="40" placeholder="Enter a title for your query" maxlength="100" /></h2>
+    <h2><input class="aca-input" type="text" id="title" name="title" value="@name" size="40" placeholder="Enter a title for your query" maxlength="100" /></h2>
     <p id="query-description-text">@(Model != null && Model.QuerySet != null ? Model.QuerySet.Description : "")</p>
-    <a id="edit-query-description" href="#">edit description</a>
+    <a id="edit-query-description" class="aca-primary-button" style="color: #FFFFFF; padding: 7px" href="#">Add Description</a>
     <textarea style="display:none" name="description" id="query-description" placeholder='enter a description'>@(Model != null && Model.QuerySet != null ? Model.QuerySet.Description : "")</textarea>
     
     <script type="text/javascript">
@@ -40,12 +40,34 @@
         });
     </script>
 }
-
-<div id="editor">
-    <div id="editor-panel" class="left-group compact">
+<div id="query-options" style="margin-top:0px">
+            <span class="options">
+                Options:
+                <label title="Return results in text format"><input type="checkbox" name="textResults" value="true" />Text-only results</label>
+            @if (AppSettings.AllowRunOnAllDbsOption)
+            {
+                <label title="Targe sites">Run on: 
+                <select name="targetSites">
+                    <option selected value="Current">This Site</option>
+                    <option value="AllSites">All Sites</option>
+                    <option value="AllMetaSites">All Meta Sites</option>
+                    <option value="AllNonMetaSites">All Non-Meta Sites</option>
+                    <option value="AllMetaSitesButMSE">All Meta Sites but MSE</option>
+                    <option value="AllNonMetaSitesButSO">All Non-Meta Sites but SO</option>
+                </select>
+                </label>
+            }
+            </span>
+            <button id="submit-query" class="aca-primary-button" style="font-size: 16px" type="submit">Run Query</button>
+        </div>
+<ul id="editor-toolbar" class="linkbar compact" style="position: relative; top: -10px">
+    <li id="schema-toggle">hide sidebar</li>
+</ul>
+<div id="editor" style="position: relative; top: -10px">
+    <div id="editor-panel" class="right-group compact">
         <textarea id="sql" name="sql" rows="26">@Html.Raw(sql)</textarea>
     </div>
-    <div id="schema" class="right-group">
+    <div id="schema" class="left-group">
         <span class="heading">Database Schema
             <span class="buttons">
                 <span class="button-group">
@@ -63,7 +85,7 @@
         {
             <li data-order="@(n++)">
                 <span class="schema-table">@table.Name</span>
-                <dl>
+                <dl style="display:none">
                 @for (int i = 0; i < table.ColumnNames.Count; i++)
                 {
                     <dt data-order="@i">@table.ColumnNames[i]</dt>
@@ -76,10 +98,6 @@
     </div>
     @Html.Partial("RevisionHistory", Model)
 </div>
-<ul id="editor-toolbar" class="linkbar compact">
-    <li id="permalink" class="result-option"><a class="templated" href="/:site/query/:id:slug:params">permalink</a></li>
-    <li id="schema-toggle">hide sidebar</li>
-</ul>
 @Scripts.Render("~/assets/js/editor")
 <script type="text/javascript">
     DataExplorer.TableHelpers.init(@Html.Raw(ViewData["HelperTables"] as string));

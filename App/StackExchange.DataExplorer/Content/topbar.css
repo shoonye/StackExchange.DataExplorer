@@ -27,11 +27,15 @@
 }
 
 #topbar .page .network-items a {
-  text-indent: -99em;
+  /*text-indent: -99em;
   background-image: url('./images/topbar-sprite.png');
   background-position: 9px 8px;
   background-repeat: no-repeat;
-  width: 122px;
+  width: 122px;*/
+}
+
+#topbar .page .network-items a:hover {
+    color: #5CADDD;
 }
 
 #topbar .page .topbar-links {

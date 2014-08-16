@@ -29,42 +29,6 @@
             </div>
         }
         
-        <div id="aboutSite" class="module">
-            <img src="@site.ImageUrl" alt="@site.LongName" class="site" />
-            <p class="tagline">@site.Tagline</p>
-        </div>
-
-        <div class="module totalQuestions">
-            @Html.Raw(site.TotalQuestions.PrettyShort())
-            <span class="desc">questions </span>
-        </div>
-        <div class="module totalAnswers">
-            @Html.Raw(site.TotalAnswers.PrettyShort())
-            <span class="desc">answers </span>
-        </div>
-        <div class="module totalComments">
-            @Html.Raw(site.TotalComments.PrettyShort())
-            <span class="desc">comments </span>
-        </div>
-        <div class="module totalTags">
-            @Html.Raw(site.TotalTags.PrettyShort())
-            <span class="desc">tags </span>
-        </div>
-        <div class="module latestPost">
-            <span class="title">@site.LastPost.ToRelativeTimeSpanMicro()</span>
-            <span class="desc">most recent </span>
-        </div>
-
-        <div class="module odata">
-            <span class="desc image">
-                <a href="@site.ODataEndpoint" title="Open Data Protocol endpoint for @site.LongName">
-                    <img src="/Content/images/icon-odatafeed-32x32.png" width="32" height="32" alt="" />
-                </a>
-            </span>
-            <span class="desc">
-                <a href="@site.ODataEndpoint" title="Open Data Protocol endpoint for @site.LongName" alt="Open Data Protocol endpoint for @site.LongName">OData</a>
-            </span>
-        </div>
     </div>
 }
 

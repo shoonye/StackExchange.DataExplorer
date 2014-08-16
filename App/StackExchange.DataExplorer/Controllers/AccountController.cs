@@ -28,8 +28,6 @@ namespace StackExchange.DataExplorer.Controllers
         [Route("account/login", HttpVerbs.Get)]
         public ActionResult Login(string returnUrl)
         {
-            SetHeader(CurrentUser.IsAnonymous ? "Log in with OpenID" : "Log in below to change your OpenID");
-
             return View("Login");
         }
 
@@ -109,13 +107,13 @@ namespace StackExchange.DataExplorer.Controllers
                                     Current.DB.OpenIdWhiteList.Update(whiteListEntry.Id, new { OpenId = whiteListEntry.OpenId });
                                 }
                             }
-                            
+
                             if (whiteListEntry == null || !whiteListEntry.Approved)
                             {
                                 if (whiteListEntry == null)
                                 {
                                     // add a non approved entry to the list
-                                    var newEntry = new 
+                                    var newEntry = new
                                     {
                                         Approved = false,
                                         CreationDate = DateTime.UtcNow,
@@ -124,7 +122,7 @@ namespace StackExchange.DataExplorer.Controllers
                                     };
 
                                     Current.DB.OpenIdWhiteList.Insert(newEntry);
- 
+
                                 }
 
                                 // not allowed in 
@@ -145,7 +143,7 @@ namespace StackExchange.DataExplorer.Controllers
                                 return View("Login");
                             }
 
-                            var currentOpenIds = Current.DB.Query<UserOpenId>("select * from UserOpenIds  where UserId = @Id", new {CurrentUser.Id});
+                            var currentOpenIds = Current.DB.Query<UserOpenId>("select * from UserOpenIds  where UserId = @Id", new { CurrentUser.Id });
 
                             // If a user is merged and then tries to add one of the OpenIDs used for the two original users,
                             // this update will fail...so don't attempt it if we detect that's the case. Really we should
@@ -154,7 +152,7 @@ namespace StackExchange.DataExplorer.Controllers
                             {
                                 Current.DB.UserOpenIds.Update(currentOpenIds.First().Id, new { OpenIdClaim = normalizedClaim });
                             }
-                          
+
                             user = CurrentUser;
                             returnUrl = "/users/" + user.Id;
                         }

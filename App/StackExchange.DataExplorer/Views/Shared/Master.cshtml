@@ -33,55 +33,52 @@
     </script>
 </head>
 <body>
-    <div id="topbar">
-        <div class="page">
-            <div class="network-items">
-                <a href="//stackexchange.com">Stack Exchange</a>
+    <div class="header-container">
+        <div class="header">
+            <div class="header-logo">
+                <a href="/">
+                    <img class="image-logo" src="/Content/images/aca-logo.png">
+                </a>
             </div>
-            <div class="topbar-links">
-            @if (Request.IsAuthenticated)
-            {
-                <a href="/users/@Current.User.ProfilePath" class="my-profile">@Current.User.Login</a>
-            }
-                <span class="navigation-links">
-                @if (Request.IsAuthenticated)
-                {
-                    <a href="/account/logout">log out</a>
-                    if (Current.User.IsAdmin)
-                    { 
-                    <a href="/admin">mod</a>
-                    }
-                }
-                else
-                {
-                    <a href="/account/login?returnurl=@Request.RawUrl">log in</a>
-                }
-                    <a href="/help">help</a>
-                </span>
-                <div class="search-form">
-                    <form method="GET" action="/@site.TinyName.ToLower()/queries">
-                        @Html.TextBox("q", "", new { id = "q", tabindex = 1, maxlength = 80, size = 28, placeholder = "search" })
-                    </form>
+            <div class="header-elements">
+
+                <!-- Display user info here -->
+                 <div class="header-user-details">
+                    Welcome Anonymous
+                    <!-- <a href="${pageContext.request.contextPath}/admin"> -->
+                        <!-- <span><%=WebUtil.getLoggedInUser()%></span>
+                        <script type='text/javascript'>
+                            var loggedInUserId = <%=WebUtil.getLoggedInUserId()%>;
+                        </script> -->
+                    <!-- </a> -->
+                    |
+                    <a href="#"><span>Logout</span></a>
+                </div>
+    
+                <!-- The tab container starts here -->
+                <div class='header-tabs tabs-container'>
+                    <ul id='tab-item-container' class="navigation tab" >
+                        <li>
+                            <a href="/so/query/new">New Query</a>
+                        </li>
+                        <li>
+                            <a href="/so/queries">Query History</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="page">
-        <div id="header">
-            <a id="logo" href="/" title="Stack Exchange Data Explorer">Stack Exchange Data Explorer</a>
-            @Html.Partial("Menu", ViewData["Menu"])
-            <script type="text/javascript">
-                DataExplorer.initComposeButton({
-                    IconUrl: '@Current.Controller.Site.IconUrl',
-                    LongName: '@Current.Controller.Site.LongName'
-                });
-            </script>
-        </div>
         @Html.Partial("SubHeader", ViewData["Header"])
         @RenderBody()
         @RenderSection("SecondaryContent", required: false)
     </div>
+    
     <div id="footer">
+        <!--
         <div class="footerwrap">
             <div id="footer-menu">
                 <a href="/about">help</a>
@@ -103,7 +100,13 @@
             </div>
             <div id="revision">rev @GlobalApplication.AppRevision</div>
         </div>
+        -->
+        <hr style="margin-bottom: 10px" />
+        <p>Pacific Coast Bankers' Bank and PCBB Capital Markets are sister companies and subsidiaries of</p>
+        <p>Pacific Coast Bankers' Bancshares. All securities are offered through PCBB Capital Markets, member FINRA/SIPC.</p>
+        <p><a href="https://www.pcbb.com/info/copyright.html" target="_blank">&copy; Pacific Coast Bankers' Bancshares</a></p>
     </div>
+ 
     @if (HttpContext.Current.IsDebuggingEnabled)
     {
         <div title="Debugging is enabled" style="position: fixed; right: 0; top: 0; background-color: #E8272C; color: #F7F7F7; padding: 6px; padding-top: 8px; font-size: 18px; text-align: center;">

@@ -242,7 +242,7 @@ ORDER BY
                 string sql =
                     @"
 select TABLE_NAME, COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH from INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_SCHEMA='"+ databaseName +"' order by TABLE_NAME, ORDINAL_POSITION";
+WHERE TABLE_SCHEMA='"+ databaseName +"' AND TABLE_NAME IN (Select template from template  where type = 'fdic') order by TABLE_NAME, ORDINAL_POSITION";
                 using (var cmd = new MySqlCommand(sql))
                 {
                     cmd.Connection = cnn;

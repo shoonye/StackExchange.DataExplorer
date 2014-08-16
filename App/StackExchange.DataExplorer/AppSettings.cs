@@ -15,7 +15,7 @@ namespace StackExchange.DataExplorer
             Refresh(); 
         }
 
-        [Default(120)]
+        [Default(0)]
         public static int QueryTimeout { get; private set; }
 
         [Default(2)]

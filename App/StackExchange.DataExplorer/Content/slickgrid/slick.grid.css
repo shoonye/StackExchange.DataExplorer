@@ -20,6 +20,11 @@ classes should alter those!
 	overflow: hidden;
 }
 
+.slick-header-columns
+{
+    width: 999999px !important;
+}
+
 .slick-header-column.ui-state-default {
 	position: relative;
 	display: inline-block;

@@ -90,9 +90,9 @@
     <Reference Include="MiniProfiler">
       <HintPath>..\..\Lib\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=5.0.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 5.0.9\Binaries\.NET 2.0\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\MySQL\MySQL Connector Net 5.0.9\Binaries\.NET 2.0\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -386,10 +386,6 @@
     <Content Include="Content\images\icon-odatafeed-28x28.png" />
     <Content Include="Content\images\icon-odatafeed-32x32.png" />
     <Content Include="Content\images\see_logo.png" />
-    <Content Include="Content\packaged\editor.js" />
-    <Content Include="Content\packaged\sitecss.css" />
-    <Content Include="Content\packaged\viewer.js" />
-    <Content Include="Content\packaged\viewer_editor.css" />
     <Content Include="Content\slickgrid\slick.grid.css" />
     <Content Include="favicon.ico" />
     <Content Include="OData.svc" />
@@ -469,6 +465,7 @@
     <Content Include="Views\Shared\RevisionHistory.cshtml" />
     <Content Include="Views\Shared\UserList.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

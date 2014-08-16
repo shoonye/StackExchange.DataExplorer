@@ -1,13 +1,11 @@
 ﻿#logo {
-  display: block;
-  float: left;
+  display: inline-block;
   height: 90px;
   width: 230px;
   text-indent: -99em;
-  background-image: url('./images/topbar-sprite.png');
-  background-position: 0 -20px;
+  background-image: url('./images/aca-logo.png');
+  background-size: 80%;
   background-repeat: no-repeat;
-  margin-top: 22px;
 }
 
 nav.primary {
@@ -32,15 +30,20 @@ nav.primary .nav ul {
   line-height: 16px;
 }
 
-nav.primary .nav .youarehere, nav.primary .nav li a:hover {
+nav.primary .nav .youarehere {
   background:none repeat scroll 0 0 #0C57A0;
+}
+
+nav.primary .nav li a:hover {
+    background:none repeat scroll 0 0 #02253A;
 }
 
 nav.primary .nav li {
   display:block;
   float:left;
   margin-right:7px;
-  background:none repeat scroll 0 0 #777777;
+  background:none repeat scroll 0 0 #005883;
+  border-radius: 4px;
 }
 
 nav.primary .nav li a {
@@ -116,11 +119,11 @@ nav.primary .site-selector-popup .ac_results li.ac_over {
 }
 
 .subheader {
-  border-bottom: 1px solid #CCC;
   clear: both;
   height: 34px;
   margin-bottom: 15px;
   width: 100%;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .subheader h2 {
@@ -128,6 +131,8 @@ nav.primary .site-selector-popup .ac_results li.ac_over {
   font-size: 170%;
   line-height: 34px;
   margin-bottom: 0;
+  font-family: inherit;
+  font-weight: normal;
 }
 
 #tabs {
