@@ -4,7 +4,6 @@
 @{
     Layout = "~/Views/Shared/Query.cshtml";
     this.SetPageTitle(Model.Revision.QuerySet.Title + " - Stack Exchange Data Explorer");
-
     var querySet = Model.Revision.QuerySet;
     var initialRevision = querySet.InitialRevision;
     var currentRevision = Model.Revision;
@@ -16,19 +15,20 @@
 }
 
 @helper UserSignature(User user, DateTime date, bool isEdit, bool isOwner)
-{
-<div class="user-info@(isOwner && !isEdit?" owner":"")">
-    <div class="user-action-time">@(isEdit?"Edited":"Created") @date.ToRelativeTimeSpanMicro()</div>
+    {
+
+<div class="user-info@(isOwner && !isEdit ? " owner" : "")">
+    <div class="user-action-time">@(isEdit ? "Edited" : "Created") @date.ToRelativeTimeSpanMicro()</div>
     @if ((isOwner && !isEdit) || !isOwner)
     { 
         <div class="user-gravatar32">
             @if (user.IsAnonymous)
-            { 
+            {
                 <span>Anonymous</span>
             }
             else
-            { 
-                <a href="/users/@user.Id">@user.Login</a>
+            {
+                <span>@user.Login</span>
             }
         </div>
     }

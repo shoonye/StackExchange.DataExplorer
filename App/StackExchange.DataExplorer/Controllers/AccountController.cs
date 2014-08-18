@@ -75,7 +75,8 @@ namespace StackExchange.DataExplorer.Controllers
                 Response.Cookies.Add(authenticationCookie);
             }
             connection.Close();
-            return Redirect(returnUrl);
+           // return Redirect(returnUrl);
+            return Redirect("/so/query/new");
         }
 
         private String encryptPassword(String userPassword)

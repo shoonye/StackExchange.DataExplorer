@@ -127,23 +127,6 @@ namespace StackExchange.DataExplorer.Models
             int maxId = Current.DB.Query<int?>("select max(Id) + 1 from Users").First() ?? 0;
             maxId += 1;
 
-            while (!success)
-            {
-                IList<BusinessRuleViolation> violations = u.GetBusinessRuleViolations(ChangeAction.Insert);
-
-                if (violations.Any(v => v.PropertyName == "Login"))
-                {
-                    u.Login = login + (maxId + retries);
-                }
-                else if (violations.Count > 0)
-                {
-                    throw new NotImplementedException("The User isn't valid, and we can't compensate for it right now.");
-                }
-                else
-                {
-                    success = true;
-                }
-            }
 
             u.Id = Current.DB.Users.Insert(new { u.Email, u.Login, u.CreationDate }).Value;
             Current.DB.UserOpenIds.Insert(new { OpenIdClaim = openIdClaim, UserId = u.Id });

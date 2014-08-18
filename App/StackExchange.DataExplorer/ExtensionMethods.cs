@@ -756,6 +756,12 @@ namespace StackExchange.DataExplorer
             page.ViewData["PageTitle"] = title;
         }
 
+        public static void SetLoggedinUser(this WebViewPage page, string user)
+        {
+           // user = HtmlUtilities.Encode(user);
+            page.ViewData["LoggedinUser"] = user;
+        }
+
 
         public static string ReplaceFirst(this string input, string search, string replace)
         {

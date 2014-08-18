@@ -19,8 +19,6 @@
     @Scripts.Render("~/assets/js/jquery")
     @Scripts.Render("~/assets/js/master")
 
-    @StackExchange.Profiling.MiniProfiler.RenderIncludes()
-
     <script type="text/javascript">
         DataExplorer.init({
             'User.id': @(Current.User.IsAnonymous ? "null" : Current.User.Id.ToString()),
@@ -40,21 +38,16 @@
                     <img class="image-logo" src="/Content/images/aca-logo.png">
                 </a>
             </div>
+            @if (!Current.User.IsAnonymous)
+            {
             <div class="header-elements">
-
                 <!-- Display user info here -->
                  <div class="header-user-details">
-                    Welcome Anonymous
-                    <!-- <a href="${pageContext.request.contextPath}/admin"> -->
-                        <!-- <span><%=WebUtil.getLoggedInUser()%></span>
-                        <script type='text/javascript'>
-                            var loggedInUserId = <%=WebUtil.getLoggedInUserId()%>;
-                        </script> -->
-                    <!-- </a> -->
+                    <span>Welcome</span>
+                    <span>@Current.User.Login.ToString()</span>
                     |
-                    <a href="#"><span>Logout</span></a>
+                    <a href="/account/logout"><span>Logout</span></a>
                 </div>
-    
                 <!-- The tab container starts here -->
                 <div class='header-tabs tabs-container'>
                     <ul id='tab-item-container' class="navigation tab" >
@@ -67,6 +60,7 @@
                     </ul>
                 </div>
             </div>
+            }
         </div>
     </div>
 
