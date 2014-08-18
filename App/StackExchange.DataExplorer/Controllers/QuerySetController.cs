@@ -12,6 +12,7 @@ using StackExchange.DataExplorer.ViewModel;
 
 namespace StackExchange.DataExplorer.Controllers
 {
+    [Authorize]
     public class QuerySetController : StackOverflowController
     {
         [Route(@"{sitename}/s/{queryId:\d+}/{slug?}")]

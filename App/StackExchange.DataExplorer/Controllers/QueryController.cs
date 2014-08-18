@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace StackExchange.DataExplorer.Controllers
 {
+    [Authorize]
     public class QueryController : StackOverflowController
     {
         [Route(@"query/job/{guid}")]

@@ -74,8 +74,7 @@ namespace StackExchange.DataExplorer.Models
             get
             {
                 return ConfigurationManager.ConnectionStrings["ReaderConnection"]
-                    .ConnectionString
-                    .Replace("!!DB!!", DatabaseName);
+                    .ConnectionString;
             }
         }
 

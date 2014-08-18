@@ -8,7 +8,7 @@
         <p>This section contains confidential information not available to the public.</p>
     </div>
 
-    <form id="pcbb_login_form" action="http://www.google.com" method="post">
+    <form id="pcbb_login_form" action="/user/authenticate?returnurl=@Request.Params["returnurl"]" method="post">
 
         <label for="email">Email Address</label>
         <input class="aca-input" type="text" id="input_email" name="email" />
@@ -20,8 +20,8 @@
     
     </form>
 
-    <form id="openid_form" action="/user/authenticate?returnurl=@Request.Params["returnurl"]" method="post">
-        <!--
+  <!--  <form id="openid_form" action="/user/authenticate?returnurl=@Request.Params["returnurl"]" method="post">
+        
         <div id="openid_choice">
             <p>Click your <a href="http://openid.net/what/">OpenID</a> account provider:</p>
             <div id="openid_btns"></div>
@@ -37,7 +37,7 @@
                 </p>
             </noscript>
         </div>
-        -->
+        
         <p>Or, manually enter your OpenID:</p>
         <table id="openid-url-input">
             <tr>
@@ -54,7 +54,7 @@
                 <td colspan="2" class="error" style="text-align: center;">@ViewData["Message"]</td>
             </tr>
         </table>
-    </form>
+    </form>-->
 </div>
 <script src="/Scripts/openid-jquery.js?v=3" type="text/javascript"></script>
 <script type="text/javascript">

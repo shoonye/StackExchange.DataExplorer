@@ -7,6 +7,7 @@ using StackExchange.DataExplorer.Helpers;
 
 namespace StackExchange.DataExplorer.Controllers
 {
+    [Authorize]
     [HandleError]
     public class HomeController : StackOverflowController
     {

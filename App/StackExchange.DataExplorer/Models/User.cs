@@ -73,6 +73,14 @@ namespace StackExchange.DataExplorer.Models
             return true;
         }
 
+        public Boolean PassMatch(String email, String pass)
+        {
+            if (pass.Equals(email))
+                return true;
+            else
+                return false;
+        }
+
         public void OnValidate(ChangeAction action)
         {
             if (!IsValid(action))
