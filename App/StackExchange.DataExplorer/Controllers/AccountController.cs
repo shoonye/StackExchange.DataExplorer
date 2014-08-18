@@ -11,6 +11,7 @@ using StackExchange.DataExplorer.Helpers;
 using StackExchange.DataExplorer.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.Data.SqlClient;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Collections.Concurrent;
@@ -43,18 +44,11 @@ namespace StackExchange.DataExplorer.Controllers
         [ValidateInput(false)]
         public ActionResult Authenticate(string returnUrl)
         {
-            MD5 md5Hash = MD5.Create();
             string pass = encryptPassword(Request.Form["password"]);
             string email = Request.Form["email"];
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ReaderConnection"].ConnectionString;
-
-    //        string strConnection = ConfigurationSettings.AppSettings["ConnectionString"];
             MySqlConnection connection = new MySqlConnection(connstring);
-    //        MySqlCommand command = connection.CreateCommand();
-    //        MySqlDataReader reader;
-    //        command.CommandText = "SELECT username FROM user WHERE email = '" + email + "' and password = '" + pass+"'";
             connection.Open();
-    //        reader = command.ExecuteReader();
             var sql = "SELECT name FROM user WHERE email = '" + email + "' and password = '" + pass+"'";
 
             var id = connection.Query<String>(sql);
@@ -69,7 +63,7 @@ namespace StackExchange.DataExplorer.Controllers
                     1,
                     user.Id.ToString(),
                     DateTime.Now,
-                    DateTime.Now.AddYears(2),
+                    DateTime.Now.AddMinutes(15),
                     true,
                     Groups);
 
@@ -80,15 +74,26 @@ namespace StackExchange.DataExplorer.Controllers
                 authenticationCookie.HttpOnly = true;
                 Response.Cookies.Add(authenticationCookie);
             }
+            connection.Close();
             return Redirect(returnUrl);
         }
 
         private String encryptPassword(String userPassword)
         {
-
+            cleanDb();
             SHA1 sha1 = SHA1CryptoServiceProvider.Create();
             byte[] hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(userPassword));
             return Convert.ToBase64String(hash);
+        }
+
+        private void cleanDb()
+        {
+            string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["AppConnection"].ConnectionString;
+            SqlConnection connection = new SqlConnection(connstring);
+            connection.Open();
+            var sql = "Delete from [dbo].[UserOpenIds]";
+            var id = connection.Query<String>(sql);
+            connection.Close();
         }
 
         private bool IsVerifiedEmailProvider(string identifier)
