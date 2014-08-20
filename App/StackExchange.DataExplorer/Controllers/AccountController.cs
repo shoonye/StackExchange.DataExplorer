@@ -74,6 +74,10 @@ namespace StackExchange.DataExplorer.Controllers
                 authenticationCookie.HttpOnly = true;
                 Response.Cookies.Add(authenticationCookie);
             }
+            else
+            {
+                return Redirect("/account/login?login=failed");
+            }
             connection.Close();
            // return Redirect(returnUrl);
             return Redirect("/so/query/new");

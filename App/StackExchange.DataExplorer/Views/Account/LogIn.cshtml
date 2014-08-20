@@ -8,14 +8,19 @@
     </div>
 
     <form id="pcbb_login_form" action="/user/authenticate?returnurl=@Request.Params["returnurl"]" method="post">
+        @if (Request.Params["login"] == "failed")
+        {
+            <div id="loginError">
+		        The login name or password you entered is incorrect.<br />
+		    </div>
+        }
+        <label for="email">Email Address</label><br />
+        <input class="aca-standard-input" type="text" id="input_email" name="email" /><br />
 
-        <label for="email">Email Address</label>
-        <input class="aca-standard-input" type="text" id="input_email" name="email" />
-
-        <label for="password">Password</label>
-        <input class="aca-standard-input" id="input_password" name="password" type="password" />
+        <label for="password">Password</label><br />
+        <input class="aca-standard-input" id="input_password" name="password" type="password" /><br />
         
-        <input class="aca-primary-button" style="width: 60px" type="submit" value="Login" />
+        <input class="aca-primary-button" style="width: 60px" type="submit" value="Login" /><br />
     
     </form>
 
