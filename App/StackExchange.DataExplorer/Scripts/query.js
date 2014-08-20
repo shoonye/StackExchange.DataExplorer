@@ -522,16 +522,7 @@ DataExplorer.ready(function () {
 
             if (!textOnly) {
                 var grids = [];
-                for (var i = 0; i < response.resultSets.length; ++i) {
-                    gridPanel.append(document.create('div', { className: 'subpanel' }));
-                    grids.push(new DataExplorer.ResultSet(
-                        response.resultSets[i],
-                        response.url,
-                        '#resultSets .subpanel:nth-child(' + (i + 1) + ')'
-                    ));
-                    showCurrentGrid();
-                }
-
+                
                 function showCurrentGrid() {
                     var index = gridToggle.data('current-subpanel');
 
@@ -544,6 +535,16 @@ DataExplorer.ready(function () {
                             grids[index - 1].refresh();
                         }
                     }
+                }
+                
+                for (var i = 0; i < response.resultSets.length; ++i) {
+                    gridPanel.append(document.create('div', { className: 'subpanel' }));
+                    grids.push(new DataExplorer.ResultSet(
+                        response.resultSets[i],
+                        response.url,
+                        '#resultSets .subpanel:nth-child(' + (i + 1) + ')'
+                    ));
+                    showCurrentGrid();
                 }
 
                 tabset.on('show', function (event, panel) {

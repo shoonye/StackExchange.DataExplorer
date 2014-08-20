@@ -241,7 +241,7 @@ ORDER BY
                 string sql =
                     @"
 select TABLE_NAME, COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH from INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_SCHEMA='"+ databaseName +"' AND TABLE_NAME IN (Select template from template  where type = 'fdic') order by TABLE_NAME, ORDINAL_POSITION";
+WHERE TABLE_SCHEMA='" + databaseName + "' AND (TABLE_NAME IN (Select template from template  where type = 'fdic') OR TABLE_NAME IN ('fdic_master','deposits_100k_threshold','deposits_250k_threshold','carrying_amt_loss_share_agreement','chg_equity_cap','qtrly_ln_chgoff_rec','qtrly_net_chgoff_1_4','qtrly_chgoff_1_4','qtrly_recoveries_1_4')) order by TABLE_NAME, ORDINAL_POSITION";
                 using (var cmd = new MySqlCommand(sql))
                 {
                     cmd.Connection = cnn;

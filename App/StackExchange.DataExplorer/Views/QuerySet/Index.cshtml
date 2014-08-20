@@ -98,6 +98,8 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("ul.tab > li").find(".selected").removeClass("selected");
+        $("ul.tab > li:last-child").addClass("selected");
 
         var hideSkipped = function () {
             if (skippedVisible == false) {

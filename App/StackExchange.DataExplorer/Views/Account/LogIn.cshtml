@@ -10,10 +10,10 @@
     <form id="pcbb_login_form" action="/user/authenticate?returnurl=@Request.Params["returnurl"]" method="post">
 
         <label for="email">Email Address</label>
-        <input class="aca-input" type="text" id="input_email" name="email" />
+        <input class="aca-standard-input" type="text" id="input_email" name="email" />
 
         <label for="password">Password</label>
-        <input class="aca-input" id="input_password" name="password" type="password" />
+        <input class="aca-standard-input" id="input_password" name="password" type="password" />
         
         <input class="aca-primary-button" style="width: 60px" type="submit" value="Login" />
     
@@ -60,5 +60,10 @@
     $(function () {
         openid.init('openid_identifier');
         $("#openid_identifier").focus();
+
+        $("#footer").css({
+            position : "absolute",
+            bottom : "0px"
+        });
     });
 </script>

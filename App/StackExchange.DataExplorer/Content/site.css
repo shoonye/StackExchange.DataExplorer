@@ -228,7 +228,7 @@ img {
 
 #footer 
 {
-    margin-top: 30px;
+  margin-top: 30px;
   width: 100%;
   color: #111111;
   clear: both;
@@ -344,9 +344,28 @@ img {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-.aca-input
-{
+.aca-standard-input {
+    height: 25px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    padding: 3px 0px 3px 3px;
+    border: 1px solid #DDDDDD;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    min-width: 50px;
+    color: #000000;
+    background-color: #FFFFFF;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.aca-standard-input:focus{
+    box-shadow: 0 0 5px rgba(82, 168, 236, 0.8);
+    padding: 3px 0px 3px 3px;
+    border: 1px solid rgba(82, 168, 236, 0.6);
+    outline: none;
 }
 
 #pcbb_login_form label
@@ -356,21 +375,6 @@ img {
     color: #333;
     font-family: inherit;
     font-size: 14px;
-}
-
-#pcbb_login_form input
-{
-    width: 206px;
-    height: 30px;
-    transition: all 0.3s ease-in-out 0s;
-    outline: medium none;
-    padding: 3px 0px 3px 3px;
-    margin: 5px 1px 3px 0px;
-    border: 1px solid #DDD;
-    border-radius: 3px;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
-    box-sizing: border-box;
-    font-family: inherit;
 }
 
 .aca-primary-button
@@ -504,9 +508,8 @@ ul.tab > li:hover a {
     color: #FFFFFF;
 }
 
-ul.tab > li.selected {
-    background-color: #02253A;
-    color: #FFFFFF;
+.selected {
+    background-color: #02253A !important;
 }
 
 ul.tab > li ul.submenu {

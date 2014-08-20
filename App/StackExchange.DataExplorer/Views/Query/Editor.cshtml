@@ -23,10 +23,10 @@
 }
 @section Metadata
 {
-    <h2><input class="aca-input" type="text" id="title" name="title" value="@name" size="40" placeholder="Enter a title for your query" maxlength="100" /></h2>
+    <input class="aca-standard-input" type="text" id="title" name="title" value="@name" size="40" placeholder="Enter a title for your query" maxlength="100" />
     <p id="query-description-text">@(Model != null && Model.QuerySet != null ? Model.QuerySet.Description : "")</p>
     <a id="edit-query-description" class="aca-primary-button" style="color: #FFFFFF; padding: 7px" href="#">Add Description</a>
-    <textarea style="display:none" name="description" id="query-description" placeholder='enter a description'>@(Model != null && Model.QuerySet != null ? Model.QuerySet.Description : "")</textarea>
+    <textarea class="aca-standard-input" style="display:none" name="description" id="query-description" placeholder='enter a description'>@(Model != null && Model.QuerySet != null ? Model.QuerySet.Description : "")</textarea>
     
     <script type="text/javascript">
         $(function () {
@@ -100,4 +100,7 @@
 @Scripts.Render("~/assets/js/editor")
 <script type="text/javascript">
     DataExplorer.TableHelpers.init(@Html.Raw(ViewData["HelperTables"] as string));
+
+    $("ul.tab > li").find(".selected").removeClass("selected");
+    $("ul.tab > li:first-child").addClass("selected");
 </script>
