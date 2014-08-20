@@ -77,7 +77,7 @@
                     @query.LastRun.ToRelativeTimeSpanMicro()
                     @if (query.CreatorId != null)
                     {
-                        <a href="/users/@query.CreatorId">@query.CreatorLogin</a>
+                        @query.CreatorLogin
                     }
                 </div>
                 <div class="clear"></div>
