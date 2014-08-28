@@ -332,9 +332,9 @@ namespace StackExchange.DataExplorer.Controllers
                 builder.Join("Revisions r ON r.Id = qs.CurrentRevisionId");
                 builder.Join("Queries q ON q.Id = r.QueryId");
                 builder.LeftJoin("Users u ON qs.OwnerId = u.Id");
-                builder.Where("qs.Hidden = 0");
-                builder.Where("qs.Title is not null");
-                builder.Where("qs.Title <> ''");
+       //         builder.Where("qs.Hidden = 0");
+      //          builder.Where("qs.Title is not null");
+      //          builder.Where("qs.Title <> ''");
 
                 if (order_by == "featured" || order_by == "recent")
                 {
