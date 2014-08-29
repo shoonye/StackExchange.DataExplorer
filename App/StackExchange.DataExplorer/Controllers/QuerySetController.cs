@@ -332,6 +332,7 @@ namespace StackExchange.DataExplorer.Controllers
                 builder.Join("Revisions r ON r.Id = qs.CurrentRevisionId");
                 builder.Join("Queries q ON q.Id = r.QueryId");
                 builder.LeftJoin("Users u ON qs.OwnerId = u.Id");
+                builder.LeftJoin("RevisionExecutions rex ON rex.RevisionId = r.Id");
        //         builder.Where("qs.Hidden = 0");
       //          builder.Where("qs.Title is not null");
       //          builder.Where("qs.Title <> ''");
@@ -344,7 +345,8 @@ namespace StackExchange.DataExplorer.Controllers
                         builder.OrderBy("qs.Votes DESC");
                     }
 
-                    builder.OrderBy("qs.LastActivity DESC");
+              //      builder.OrderBy("qs.LastActivity DESC");
+                    builder.OrderBy("rex.LastRun DESC");
                 }
                 else
                 {
@@ -374,6 +376,7 @@ namespace StackExchange.DataExplorer.Controllers
             {
                 pager = builder.AddTemplate(@"
                     SELECT
+                        * , 
                         /**select**/
                     FROM (
                         SELECT r.*, ROW_NUMBER() OVER(/**orderby**/) AS RowNumber FROM Revisions r
@@ -383,7 +386,8 @@ namespace StackExchange.DataExplorer.Controllers
                     WHERE 
                         RowNumber BETWEEN @start AND @finish
                     ORDER BY
-                        RowNumber",
+                         rex.LastRun DESC",
+                                  
                     new { start = start, finish = finish }
                 );
                 counter = builder.AddTemplate("SELECT COUNT(*) FROM Revisions r");
@@ -395,6 +399,8 @@ namespace StackExchange.DataExplorer.Controllers
                 builder.Join("QuerySets qs on qs.Id = qr.QuerySetId");
                 builder.Join("Queries q on q.Id = r.QueryId");
                 builder.LeftJoin("Users u ON r.OwnerId = u.Id");
+                builder.LeftJoin("RevisionExecutions rex ON rex.RevisionId = r.Id");
+               // builder.OrderBy("rex.LastRun DESC");
                 builder.OrderBy("CreationDate DESC");
             }
 
