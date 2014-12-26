@@ -49,7 +49,7 @@ namespace StackExchange.DataExplorer.Controllers
             string connstring = System.Configuration.ConfigurationManager.ConnectionStrings["ReaderConnection"].ConnectionString;
             MySqlConnection connection = new MySqlConnection(connstring);
             connection.Open();
-            var sql = "SELECT name FROM user WHERE email = '" + email + "' and password = '" + pass+"'";
+            var sql = "SELECT name FROM user WHERE email = '" + email + "' and password = '" + pass+"'" +" and id in (select `user_id` from `user_role_mapping` where `user_role_id` in (select id from user_role where id in(select `user_role_id` from `role_permission_mapping` where `permission_id` in (select id from permission where `permission_code` = 'VIEW_QUERY_PORTAL') )))";
 
             var id = connection.Query<String>(sql);
             if (id.Count() > 0)
