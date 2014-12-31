@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="Default Web Site/StackExchange.DataExplorer_deploy" />
+  <setParameter name="AppConnection-Web.config Connection String" value="Data Source=.\SQLExpress;Initial Catalog=DataExplorer;Uid=Asheesh-PC\prateek;Pwd=qwerty123;Integrated Security=True;" />
+  <setParameter name="ReaderConnection-Web.config Connection String" value="server=127.0.0.1;Port=3306;Database=aca;Uid=root;password=root;" />
+</parameters>

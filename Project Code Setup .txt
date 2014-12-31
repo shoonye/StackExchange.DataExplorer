@@ -1,0 +1,9 @@
+1. if you need the last build it will reside in Deployeble_build a zip file,Otherwise perform following steps to do project setup
+
+2. clone and build the project project and remove the reference of mysql if any and add reference of the MYSQL.DATA.DLL and yahoo.yui.compressor.dll by giving its path if they don't exist
+
+3.Edit connectionString if the deployment environment db information is known ,otherwise let it be configured at the time of deployment in iis 
+
+4.Copy web.release.config and paste it on project and add it to project if it doesn't exist or you want to edit something
+
+5.Right click and publish project by giving directory and select publish method as web deploy pckg.

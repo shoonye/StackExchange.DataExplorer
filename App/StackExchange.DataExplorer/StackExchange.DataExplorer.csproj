@@ -20,8 +20,10 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <UpgradeBackupLocation />
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -281,6 +283,7 @@
     <Content Include="Content\font-awesome\font\fontawesome-webfont.svg" />
     <Content Include="Content\header.css" />
     <Content Include="Content\homepage.css" />
+    <Content Include="Content\images\aca-logo.png" />
     <Content Include="Content\images\help-icon.png" />
     <Content Include="Content\images\help-sample-graph.png" />
     <Content Include="Content\query.css" />
@@ -360,6 +363,8 @@
     <Content Include="Content\qp\qp.css" />
     <Content Include="Content\qp\qp.xslt" />
     <Content Include="Content\topbar.css" />
+    <Content Include="Extra_Dlls\MySql.Data.dll" />
+    <Content Include="Extra_Dlls\Yahoo.Yui.Compressor.dll" />
     <Content Include="Scripts\codemirror\codemirror.js" />
     <Content Include="Scripts\codemirror\runmode.js" />
     <Content Include="Scripts\codemirror\sql.js" />
@@ -409,10 +414,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
@@ -471,6 +472,9 @@
     <Content Include="Views\Shared\UserList.cshtml" />
     <Content Include="Views\Home\Help.cshtml" />
     <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
